@@ -9,8 +9,11 @@ typedef struct {
 typedef struct {
     int x; // liczba kolumn
     int y; // liczba wierszy
-    field ** fields; // tablica dwuwymiarowa zawierajaca pola
+    field *** fields; // tablica dwuwymiarowa zawierajaca pola
 } minefield;
 
 minefield* create_minefield(int x, int y, int ile_bomb);
 void display_minefield(minefield* plansza);
+void check_proximity(minefield* plansza);
+void reveal_field(minefield* plansza, int x, int y);
+int check_field(minefield* plansza, int x, int y);
