@@ -17,3 +17,4 @@ void display_minefield(minefield* plansza);
 void check_proximity(minefield* plansza);
 void reveal_field(minefield* plansza, int x, int y);
 int check_field(minefield* plansza, int x, int y);
+void put_flag(minefield* plansza, int x ,int y);

@@ -17,20 +17,25 @@ int get_difficulty() {
 }
 void user_move(minefield* plansza) {
     char input[MAX_BUFF]; // Bufor na dane wejściowe
-    int x, y, f;     // Lokalne zmienne do przechowywania danych
-
+    int x, y;        // Lokalne zmienne do przechowywania danych
+    char place_mode; // tryb reveal lub flag
     while (1) {
-        printf("Podaj dane w formacie (x:int y:int f:int): ");
+        printf("Podaj dane w formacie (place_mode:char x:int y:int): ");
         fgets(input, sizeof(input), stdin); // Odczyt danych wejściowych
 
         // Parsowanie danych wejściowych
-        if ((sscanf(input, "%d %d %d", &x, &y, &f) == 3) && x>=0 && x<plansza->x && y>=0 && y<plansza->y && f>=0 && f<2 ) {
+        if ((sscanf(input, "%c %d %d", &place_mode, &x, &y) == 3) && x>=0 && x<plansza->x && y>=0 && y<plansza->y && (place_mode == 'f' || place_mode == 'r') ) {
             break;
         }
         printf("Błąd: Niepoprawny format danych wejściowych. Spróbuj ponownie.\n");
         input[strcspn(input, "\n")] = '\0';
     }
-    check_field(plansza, x, y);
+    if(place_mode == 'f'){
+        put_flag(plansza,x,y);
+    }
+    else if(place_mode == 'r'){
+        check_field(plansza, x, y);
+    }
 }
 
         

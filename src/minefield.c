@@ -40,7 +40,7 @@ void display_minefield(minefield* plansza) {
     for (int i = 0; i < plansza->x; i++) {
         for (int j = 0; j < plansza->y; j++) {
             if ( plansza->fields[i][j]->flag ) {
-                printf ("  ⚑");
+                printf ("  🚩");
             }
             else if ( plansza->fields[i][j]->bomb ) printf("  B");
             else if ( plansza->fields[i][j]->hidden ) {
@@ -132,6 +132,12 @@ int check_field(minefield* plansza, int x, int y) {
     if (plansza->fields[x][y]->bomb) return 2; // odkryta bomba
     reveal_field(plansza, x, y);
     return 0;
+}
+
+void put_flag(minefield* plansza, int x ,int y){
+    if ( x > plansza->x || y > plansza->y ) return; // out ouf bounds
+    if(plansza->fields[x][y]->bomb || !plansza->fields[x][y]->hidden) return;
+    plansza->fields[x][y]->flag = 1; 
 }
 
 
