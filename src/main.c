@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "io.h"
+#include "scoreboard.h"
     
 int main() {
     //int x, y, f; useless?
@@ -31,6 +32,9 @@ int main() {
                 free(plansza);
                 printf("\n=======================================\n\n Przegrałeś (odkryto bombe) :( \n\n");
                 break;
+        }
+        else{
+                display_scoreboard(plansza,&difficulty);
         }
         
     }

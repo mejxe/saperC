@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
+#define COLOR_1 "\x1b[2;30;46m"
+#define COLOR_CLEAR "\x1b[0m"
 /*
 Metody zwiazane z polami i polem minowym, generowanie, liczenie bliskosci, aktualizowanie i wyswietlanie
 */
@@ -40,7 +43,7 @@ void display_minefield(minefield* plansza) {
     for (int i = 0; i < plansza->x; i++) {
         for (int j = 0; j < plansza->y; j++) {
             if ( plansza->fields[i][j]->flag ) {
-                printf (" 🚩");
+                printf ("%s 🚩%s",COLOR_1,COLOR_CLEAR);
             }
             else if ( plansza->fields[i][j]->bomb ) printf("  B");
             else if ( plansza->fields[i][j]->hidden ) {

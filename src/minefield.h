@@ -1,3 +1,5 @@
+#ifndef MINEFIELD_H
+#define MINEFIELD_H
 
 typedef struct {
     int hidden; // 0|1 - false|true
@@ -18,3 +20,4 @@ void check_proximity(minefield* plansza);
 void reveal_field(minefield* plansza, int x, int y);
 int check_field(minefield* plansza, int x, int y);
 void put_flag(minefield* plansza, int x ,int y);
+#endif
