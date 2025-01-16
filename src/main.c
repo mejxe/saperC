@@ -24,9 +24,15 @@ int main() {
                 }
     }
     
+    while (1) // game loop
+    {
+        display_minefield(plansza);
+        if(user_move(plansza) == 2){
+                free(plansza);
+                printf("\n=======================================\n\n Przegrałeś (odkryto bombe) :( \n\n");
+                break;
+        }
+        
+    }
     
-    display_minefield(plansza);
-    user_move(plansza);
-    display_minefield(plansza);
-    free(plansza);
 }

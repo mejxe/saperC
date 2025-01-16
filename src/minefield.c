@@ -40,7 +40,7 @@ void display_minefield(minefield* plansza) {
     for (int i = 0; i < plansza->x; i++) {
         for (int j = 0; j < plansza->y; j++) {
             if ( plansza->fields[i][j]->flag ) {
-                printf ("  🚩");
+                printf (" 🚩");
             }
             else if ( plansza->fields[i][j]->bomb ) printf("  B");
             else if ( plansza->fields[i][j]->hidden ) {
@@ -86,6 +86,7 @@ void check_proximity(minefield *plansza) {
 void reveal_field(minefield *plansza, int x, int y) {
     if (x < 0 || x >= plansza->x || y < 0 || y >= plansza->y) return;
     if ( plansza->fields[x][y]->bomb ) return;
+    if( plansza->fields[x][y]->flag) return;
     if ( !plansza->fields[x][y]->hidden ) return;
     plansza->fields[x][y]->hidden = 0;
     plansza->fields[x][y]->flag = 0;

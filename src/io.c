@@ -15,10 +15,11 @@ int get_difficulty() {
     clear_buff();
     return diff;
 }
-void user_move(minefield* plansza) {
+int user_move(minefield* plansza) {
     char input[MAX_BUFF]; // Bufor na dane wejściowe
     int x, y;        // Lokalne zmienne do przechowywania danych
     char place_mode; // tryb reveal lub flag
+    int round_result = 0;
     while (1) {
         printf("Podaj dane w formacie (place_mode:char x:int y:int): ");
         fgets(input, sizeof(input), stdin); // Odczyt danych wejściowych
@@ -34,8 +35,9 @@ void user_move(minefield* plansza) {
         put_flag(plansza,x,y);
     }
     else if(place_mode == 'r'){
-        check_field(plansza, x, y);
+        round_result = check_field(plansza, x, y);
     }
+    return round_result;
 }
 
         
