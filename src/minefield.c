@@ -40,11 +40,11 @@ void display_minefield(minefield* plansza) {
     for (int i = 0; i < plansza->x; i++) {
         for (int j = 0; j < plansza->y; j++) {
             if ( plansza->fields[i][j]->flag ) {
-                printf ("  F");
+                printf ("  ⚑");
             }
             else if ( plansza->fields[i][j]->bomb ) printf("  B");
             else if ( plansza->fields[i][j]->hidden ) {
-                printf ("  0");
+                printf ("  ■");
             }
             else {
                 printf("\x1b[2;30;46m %d \x1b[0m", plansza->fields[i][j]->bombs_near);

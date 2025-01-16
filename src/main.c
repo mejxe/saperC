@@ -3,7 +3,7 @@
 #include "io.h"
     
 int main() {
-    int x, y, f;
+    //int x, y, f; useless?
     minefield* plansza;
     int difficulty = get_difficulty();
     switch (difficulty) {
