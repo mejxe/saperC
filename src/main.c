@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include "io.h"
 #include "scoreboard.h"
-    
+#include "player.h"
+#include <string.h>
+
 int main() {
     //int x, y, f; useless?
     minefield* plansza;
@@ -24,6 +26,20 @@ int main() {
         break;
                 }
     }
+
+    player_data data = (player_data) {.score = 0}; 
+    data.name = malloc(20);
+    strcpy(data.name,get_player_name());
+
+    save_player_data(&data);
+
+//     player_data** player_datas = malloc(sizeof(player_data*));
+//     int player_data_count = 0;
+//     read_players_data(player_datas,&player_data_count);
+//     for (int i = 0; i < player_data_count; i++){ 
+//         printf("%s: %d\n",player_datas[i]->name,player_datas[i]->score);
+//     }
+    
     
     while (1) // game loop
     {
