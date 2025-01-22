@@ -7,6 +7,6 @@ typedef struct player_data {
 } player_data;
 
 void save_player_data(player_data* data);
-void read_players_data(player_data** data, int* data_count);
+player_data* read_players_data(int* data_count);
 
 #endif

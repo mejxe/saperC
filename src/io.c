@@ -2,6 +2,7 @@
 #include "io.h"
 #include <string.h>
 #include <stdlib.h>
+
 #define MAX_BUFF 20
 void clear_buff() {
     int c;

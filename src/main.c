@@ -33,12 +33,12 @@ int main() {
 
     save_player_data(&data);
 
-//     player_data** player_datas = malloc(sizeof(player_data*));
-//     int player_data_count = 0;
-//     read_players_data(player_datas,&player_data_count);
-//     for (int i = 0; i < player_data_count; i++){ 
-//         printf("%s: %d\n",player_datas[i]->name,player_datas[i]->score);
-//     }
+    int player_data_count = 0;
+    player_data* player_datas = read_players_data(&player_data_count);
+
+    for (int i = 0; i < player_data_count; i++){ 
+        printf("%s: %d\n",player_datas[i].name,player_datas[i].score);
+    }
     
     
     while (1) // game loop
