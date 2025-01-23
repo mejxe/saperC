@@ -3,7 +3,8 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define MAX_BUFF 20
+#define MAX_BUFF 32
+
 void clear_buff() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF) { }
@@ -17,11 +18,11 @@ int get_difficulty() {
     clear_buff();
     return diff;
 }
-int user_move(minefield* plansza) {
+round_result* user_move(minefield* plansza) {
     char input[MAX_BUFF]; // Bufor na dane wejściowe
     int x, y;        // Lokalne zmienne do przechowywania danych
     char place_mode; // tryb reveal lub flag
-    int round_result = 0;
+    round_result* round_result = malloc(sizeof(*round_result));
     clear_buff();
     while (1) {
         printf("Podaj dane w formacie (place_mode:char x:int y:int): ");
@@ -34,11 +35,13 @@ int user_move(minefield* plansza) {
         printf("Błąd: Niepoprawny format danych wejściowych. Spróbuj ponownie.\n");
         input[strcspn(input, "\n")] = '\0';
     }
+    round_result->ruch_x = x;
+    round_result->ruch_y = y;
     if(place_mode == 'f'){
         put_flag(plansza,x,y);
     }
     else if(place_mode == 'r'){
-        round_result = check_field(plansza, x, y);
+        round_result->rezultat = check_field(plansza, x, y);
     }
     return round_result;
 }

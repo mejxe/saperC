@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "io.h"
+#include "minefield.h"
 #include "scoreboard.h"
 #include "player.h"
 #include <string.h>
@@ -40,11 +41,14 @@ int main() {
         printf("%s: %d\n",player_datas[i].name,player_datas[i].score);
     }
     
+    // first move
+    display_minefield(plansza);
+    first_move(plansza);
     
     while (1) // game loop
     {
         display_minefield(plansza);
-        if(user_move(plansza) == 2){
+        if(user_move(plansza)->rezultat == 2){
                 free(plansza);
                 printf("\n=======================================\n\n Przegrałeś (odkryto bombe) :( \n\n");
                 break;

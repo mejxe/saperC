@@ -12,6 +12,7 @@ typedef struct {
     int x; // liczba kolumn
     int y; // liczba wierszy
     field *** fields; // tablica dwuwymiarowa zawierajaca pola
+    int ile_bomb;
 } minefield;
 
 minefield* create_minefield(int x, int y, int ile_bomb);
@@ -20,4 +21,5 @@ void check_proximity(minefield* plansza);
 void reveal_field(minefield* plansza, int x, int y);
 int check_field(minefield* plansza, int x, int y);
 void put_flag(minefield* plansza, int x ,int y);
+void first_move(minefield* plansza); 
 #endif

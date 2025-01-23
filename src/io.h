@@ -3,7 +3,14 @@
 
 #include "minefield.h"
 #include "player.h"
-int user_move(minefield* plansza); 
+
+typedef struct {
+    int ruch_x;
+    int ruch_y;
+    int rezultat;
+} round_result;
+
+round_result* user_move(minefield* plansza); 
 int get_difficulty(); 
 char* get_player_name();
 

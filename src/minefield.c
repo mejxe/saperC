@@ -1,4 +1,5 @@
 #include "minefield.h"
+#include "io.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -15,6 +16,7 @@ minefield* create_minefield(int x, int y, int ile_bomb) {
     plansza->x = x;
     plansza->y = y;
     plansza->fields = malloc(x * sizeof(field *));
+    plansza->ile_bomb = ile_bomb;
     for (int i = 0; i < x; i++) {
         plansza->fields[i] = malloc(y * sizeof(field));
     } 
@@ -101,35 +103,6 @@ void reveal_field(minefield *plansza, int x, int y) {
             }
         }
     }
-//    plansza->fields[x][y]->hidden = 0;
-//    plansza->fields[x][y]->flag = 0;
-//    if (plansza->x == x || plansza->y == y) return;
-//    if (plansza->fields[x][y]->bombs_near == 0 && x>0 && y>0 ) {
-//        reveal_field(plansza,x+1, y+1);
-//        reveal_field(plansza,x+1, y-1);
-//        reveal_field(plansza,x-1, y+1);
-//        reveal_field(plansza,x-1, y-1);
-//        reveal_field(plansza,x, y-1);
-//        reveal_field(plansza,x, y+1);
-//        reveal_field(plansza,x-1, y);
-//        reveal_field(plansza,x+1, y);
-//    }
-//    if (plansza->x == 0) {
-//        reveal_field(plansza,x+1, y+1);
-//        reveal_field(plansza,x+1, y-1);
-//        reveal_field(plansza,x+1, y);
-//        reveal_field(plansza,x, y+1);
-//        reveal_field(plansza,x, y-1);
-//        reveal_field(plansza,x, y);
-//    }
-//    if (plansza->y == 0) {
-//        reveal_field(plansza,x+1, y+1);
-//        reveal_field(plansza,x-1, y+1);
-//        reveal_field(plansza,x, y+1);
-//        reveal_field(plansza,x+1, y);
-//        reveal_field(plansza,x-1, y);
-//        reveal_field(plansza,x, y);
-//    }
 }
 int check_field(minefield* plansza, int x, int y) {
     if ( x > plansza->x || y > plansza->y ) return 1; // out ouf bounds
@@ -142,6 +115,18 @@ void put_flag(minefield* plansza, int x ,int y){
     if ( x > plansza->x || y > plansza->y ) return; // out ouf bounds
     if(plansza->fields[x][y]->bomb || !plansza->fields[x][y]->hidden) return;
     plansza->fields[x][y]->flag = 1; 
+}
+void first_move(minefield* plansza) {
+    round_result* wynik = user_move(plansza);
+    if (wynik->rezultat == 2) {
+        while (check_field(plansza,wynik->ruch_x, wynik->ruch_y) == 2) {
+            int x = plansza->x;
+            int y = plansza->y;
+            int ile_bomb = plansza->ile_bomb;
+            free(plansza);
+            minefield* plansza = create_minefield(x, y,ile_bomb);
+        }
+    }
 }
 
 
