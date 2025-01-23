@@ -7,25 +7,31 @@
 #include <string.h>
 
 int main() {
-    //int x, y, f; useless?
     minefield* plansza;
     int difficulty = get_difficulty();
     switch (difficulty) {
         case 1: {
-        printf("Wybrano Łatwy\n");
-        plansza = create_minefield(9, 9, 10);
-        break;
+                    printf("Wybrano Łatwy\n");
+                    plansza = create_minefield(9, 9, 10);
+                    break;
                 }
         case 2: {
-        printf("Wybrano Średni\n");
-        plansza = create_minefield(16, 16, 30);
-        break;
+                    printf("Wybrano Średni\n");
+                    plansza = create_minefield(16, 16, 30);
+                    break;
                 }
         case 3: {
-        printf("Wybrano Trudny\n");
-        plansza = create_minefield(16, 30, 99);
-        break;
+                    printf("Wybrano Trudny\n");
+                    plansza = create_minefield(16, 30, 99);
+                    break;
                 }
+        case 4: {
+                    printf("Wybrano Własną mapę\n");
+                    custom_map* result = get_custom_map_data();
+                    plansza = create_minefield(result->x, result->y, result->ile_bomb);
+                    break;
+                }
+
     }
 
     player_data data = (player_data) {.score = 0}; 

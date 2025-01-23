@@ -32,8 +32,15 @@ minefield* create_minefield(int x, int y, int ile_bomb) {
     }
     // losowanie bomb
     srand(time(NULL));
+    
     for (int i = 0; i < ile_bomb; i++) {
-        plansza->fields[rand()%x][rand()%y]->bomb = 1;
+        int x_random = rand()%x;
+        int y_random = rand()%y;
+        if (plansza->fields[x_random][y_random]->bomb) {
+            i--;
+            continue;
+        };
+        plansza->fields[x_random][y_random]->bomb = 1;
     }
     check_proximity(plansza);
 
