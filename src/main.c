@@ -70,6 +70,23 @@ int main() {
                 break;
         }
         else{
+                if(get_score(plansza,difficulty)/(difficulty%3) == plansza->x * plansza->y - plansza->ile_bomb){
+        
+                    player_datas = read_players_data(&player_data_count);
+                    if(player_datas == NULL){
+                        player_datas = malloc(sizeof(player_data)); // allocate 1 struct for current player;
+                    }
+                    player_data current_player = (player_data) {.score = 0}; 
+                    current_player.name = malloc(256);
+                    printf("=======================================\n\n Wygrałeś użytkowniku \n\n");
+                    strcpy(current_player.name,get_player_name());
+                    current_player.score =  get_score(plansza,difficulty);
+                    update_player_data(current_player.name,current_player.score,player_datas,&player_data_count);
+                    display_whole_scoreboard(player_datas,player_data_count);
+                    save_player_datas(player_datas,player_data_count);
+                    free(plansza);
+                    break;
+                }
                 display_current_score(plansza,difficulty);
         }
 
