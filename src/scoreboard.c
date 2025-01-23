@@ -35,15 +35,18 @@ int compare_score(const void* arg1, const void* arg2){
 
 void display_whole_scoreboard(player_data* player_datas,int count){
     qsort(player_datas,count,sizeof(player_data),compare_score);
+    printf("\n🔥𝐓𝐎𝐏 𝐆𝐑𝐀𝐂𝐙𝐄🔥\n");
+    printf("┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅\n");
     for (int i = 0; i < 5; i++)
     {
         if(i >= count){
+            printf("┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅\n");
             return;
         }
 
-        printf("%d. %s: %d\n",i+1,player_datas[i].name,player_datas[i].score);
+        printf("┇ %d. %s: %d \n",i+1,player_datas[i].name,player_datas[i].score);
     }
-    
+    printf("┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅\n");
 
 }
 

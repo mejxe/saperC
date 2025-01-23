@@ -6,6 +6,8 @@
 #include "player.h"
 #include <string.h>
 
+#define CLRSCR() printf("\e[1;1H\e[2J");
+
 int main() {
     minefield* plansza;
     int difficulty = get_difficulty();
@@ -47,6 +49,8 @@ int main() {
     
     while (1) // game loop
     {
+        CLRSCR();
+        printf("\n🐀");
         display_minefield(plansza);
         if(user_move(plansza)->rezultat == 2){
                 
@@ -56,22 +60,22 @@ int main() {
                 }
                 player_data current_player = (player_data) {.score = 0}; 
                 current_player.name = malloc(256);
+                printf("n=======================================\n\n Przegrałeś (odkryto bombe) :( \n\n");
                 strcpy(current_player.name,get_player_name());
                 current_player.score =  get_score(plansza,difficulty);
-                printf("current score: %d\n", current_player.score);
                 update_player_data(current_player.name,current_player.score,player_datas,&player_data_count);
                 display_whole_scoreboard(player_datas,player_data_count);
                 save_player_datas(player_datas,player_data_count);
 
                 free(plansza);
-                printf("\n=======================================\n\n Przegrałeś (odkryto bombe) :( \n\n");
                 break;
         }
         else{
                 display_current_score(plansza,difficulty);
         }
 
+
         
     }
-    
+    \
 }
