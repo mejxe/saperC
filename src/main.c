@@ -50,7 +50,6 @@ int main() {
     while (1) // game loop
     {
         CLRSCR();
-        printf("\n🐀");
         display_minefield(plansza);
         if(user_move(plansza)->rezultat == 2){
                 
@@ -60,7 +59,7 @@ int main() {
                 }
                 player_data current_player = (player_data) {.score = 0}; 
                 current_player.name = malloc(256);
-                printf("n=======================================\n\n Przegrałeś (odkryto bombe) :( \n\n");
+                printf("=======================================\n\n Przegrałeś (odkryto bombe) :( \n\n");
                 strcpy(current_player.name,get_player_name());
                 current_player.score =  get_score(plansza,difficulty);
                 update_player_data(current_player.name,current_player.score,player_datas,&player_data_count);
