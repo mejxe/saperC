@@ -6,3 +6,9 @@ test:
 	gcc -Wall --pedantic src/minefield.c src/minefield.h src/io.c src/io.h tests/iotest.c -o tests/bin/iotest
 	./tests/bin/testminefield
 	./tests/bin/iotest
+testio:
+	gcc -Wall --pedantic src/minefield.c src/minefield.h src/io.c src/io.h tests/iotest.c -o tests/bin/iotest
+	./tests/bin/iotest
+testmf:
+	gcc -Wall --pedantic src/minefield.c src/minefield.h src/io.c src/io.h tests/minefieldtest.c -o tests/bin/testminefield
+	./tests/bin/testminefield

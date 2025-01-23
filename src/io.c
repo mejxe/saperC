@@ -14,6 +14,8 @@ int get_difficulty() {
     while (1) {
         printf("Wybierz poziom trudnosci:\n-Latwy (1)\n-Średni (2)\n-Trudny(3)\n-Własny(4)\n");
         if (scanf("%d", &diff) == 1 && diff >= 1 && diff <= 4) break;
+
+    clear_buff();
     }
     clear_buff();
     return diff;
@@ -54,22 +56,32 @@ char* get_player_name(){
             return name;
             break;
         }
+        clear_buff();
     }
 }
 custom_map* get_custom_map_data() {
     int x, y, ile_bomb;
     while (1) {
+        clear_buff();
         printf("Podaj ilość wierszy: ");
-        if (scanf("%d", &x) == 1) break;
+        if (scanf("%d", &x) == 1) {
+            break;
+        }
     }
     while (1) {
+        clear_buff();
         printf("Podaj ilość kolumn: ");
-        if (scanf("%d", &y) == 1) break;
+        if (scanf("%d", &y) == 1) {
+            break;
+        }
+        clear_buff();
     }
     while (1) {
+        clear_buff();
         printf("Podaj ilość bomb: ");
         if (scanf("%d", &ile_bomb) == 1 && ile_bomb<x*y) break;
         printf("Zły format/Za dużo bomb jak na taki rozmiar planszy\n");
+        clear_buff();
     }
     custom_map* dane = malloc(sizeof(custom_map));
     dane->x = x;
