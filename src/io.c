@@ -62,14 +62,13 @@ char* get_player_name(){
 custom_map* get_custom_map_data() {
     int x, y, ile_bomb;
     while (1) {
-        clear_buff();
         printf("Podaj ilość wierszy: ");
         if (scanf("%d", &x) == 1) {
             break;
         }
+        clear_buff();
     }
     while (1) {
-        clear_buff();
         printf("Podaj ilość kolumn: ");
         if (scanf("%d", &y) == 1) {
             break;
@@ -77,10 +76,12 @@ custom_map* get_custom_map_data() {
         clear_buff();
     }
     while (1) {
-        clear_buff();
         printf("Podaj ilość bomb: ");
-        if (scanf("%d", &ile_bomb) == 1 && ile_bomb<x*y) break;
-        printf("Zły format/Za dużo bomb jak na taki rozmiar planszy\n");
+        if (scanf("%d", &ile_bomb) == 1 && ile_bomb<x*y) {
+            clear_buff();
+            break;
+        }
+        printf("Zły format lub za dużo bomb jak na taki rozmiar planszy.\n");
         clear_buff();
     }
     custom_map* dane = malloc(sizeof(custom_map));
