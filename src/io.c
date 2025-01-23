@@ -22,6 +22,7 @@ int user_move(minefield* plansza) {
     int x, y;        // Lokalne zmienne do przechowywania danych
     char place_mode; // tryb reveal lub flag
     int round_result = 0;
+    clear_buff();
     while (1) {
         printf("Podaj dane w formacie (place_mode:char x:int y:int): ");
         fgets(input, sizeof(input), stdin); // Odczyt danych wejściowych
