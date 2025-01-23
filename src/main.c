@@ -34,18 +34,12 @@ int main() {
 
     }
 
-    player_data data = (player_data) {.score = 0}; 
-    data.name = malloc(20);
-    strcpy(data.name,get_player_name());
+    
 
-    save_player_data(&data);
 
     int player_data_count = 0;
-    player_data* player_datas = read_players_data(&player_data_count);
-
-    for (int i = 0; i < player_data_count; i++){ 
-        printf("%s: %d\n",player_datas[i].name,player_datas[i].score);
-    }
+    player_data* player_datas;
+   
     
     // first move
     display_minefield(plansza);
@@ -55,13 +49,28 @@ int main() {
     {
         display_minefield(plansza);
         if(user_move(plansza)->rezultat == 2){
+                
+                player_datas = read_players_data(&player_data_count);
+                if(player_datas == NULL){
+                    player_datas = malloc(sizeof(player_data)); // allocate 1 struct for current player;
+                }
+                player_data current_player = (player_data) {.score = 0}; 
+                current_player.name = malloc(256);
+                strcpy(current_player.name,get_player_name());
+                current_player.score =  get_score(plansza,difficulty);
+                printf("current score: %d\n", current_player.score);
+                update_player_data(current_player.name,current_player.score,player_datas,&player_data_count);
+                display_whole_scoreboard(player_datas,player_data_count);
+                save_player_datas(player_datas,player_data_count);
+
                 free(plansza);
                 printf("\n=======================================\n\n Przegrałeś (odkryto bombe) :( \n\n");
                 break;
         }
         else{
-                display_scoreboard(plansza,&difficulty);
+                display_current_score(plansza,difficulty);
         }
+
         
     }
     
