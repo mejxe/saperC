@@ -49,8 +49,30 @@ minefield* create_minefield(int x, int y, int ile_bomb) {
 }
 void display_minefield(minefield* plansza) {
     if (plansza == NULL) return;
+     printf("   ");
+    for (int i = 0; i < plansza->y; i++)
+    {
+        if(i < 10){
+            printf("  %d",i);
+        }
+        else{
+         printf(" %d",i);
+        }
+    }
+     printf("\n");
+    
     for (int i = 0; i < plansza->x; i++) {
+        
+        if(i < 10){
+            printf("  %d",i);
+        }
+        else{
+            printf(" %d",i);
+        }
+        
         for (int j = 0; j < plansza->y; j++) {
+           
+
             if ( plansza->fields[i][j]->flag ) {
                 printf ("%s 🚩%s",COLOR_1,COLOR_CLEAR);
             }
@@ -131,7 +153,7 @@ void first_move(minefield* plansza) {
             int y = plansza->y;
             int ile_bomb = plansza->ile_bomb;
             free(plansza);
-            minefield* plansza = create_minefield(x, y,ile_bomb);
+            plansza = create_minefield(x, y,ile_bomb);
         }
     }
 }
