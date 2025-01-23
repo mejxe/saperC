@@ -23,7 +23,6 @@ round_result* user_move(minefield* plansza) {
     int x, y;        // Lokalne zmienne do przechowywania danych
     char place_mode; // tryb reveal lub flag
     round_result* round_result = malloc(sizeof(*round_result));
-    clear_buff();
     while (1) {
         printf("Podaj dane w formacie (place_mode:char x:int y:int): ");
         fgets(input, sizeof(input), stdin); // Odczyt danych wejściowych
@@ -51,6 +50,7 @@ char* get_player_name(){
     while(1){
         printf("Podaj swoją nazwe\n");
         if(scanf("%s",name) == 1){
+            clear_buff();
             return name;
             break;
         }
