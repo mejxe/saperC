@@ -15,9 +15,10 @@ typedef struct {
     int ile_bomb;
 } custom_map;
 
-round_result* user_move(minefield* plansza); 
+
+round_result* user_move(minefield* plansza,move* ruch);
 int get_difficulty(); 
 char* get_player_name();
 custom_map* get_custom_map_data();
-
+void save_minefield(minefield* plansza,char* player_name,move* moves, int move_count);
 #endif

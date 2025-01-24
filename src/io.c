@@ -2,7 +2,8 @@
 #include "io.h"
 #include <string.h>
 #include <stdlib.h>
-
+#include <time.h>
+#include "minefield.h"
 
 #define MAX_BUFF 32
 
@@ -21,7 +22,7 @@ int get_difficulty() {
     clear_buff();
     return diff;
 }
-round_result* user_move(minefield* plansza) {
+round_result* user_move(minefield* plansza,move* ruch) {
     char input[MAX_BUFF]; // Bufor na dane wejściowe
     int x, y;        // Lokalne zmienne do przechowywania danych
     char place_mode; // tryb reveal lub flag
@@ -40,11 +41,15 @@ round_result* user_move(minefield* plansza) {
     round_result->ruch_x = x;
     round_result->ruch_y = y;
     if(place_mode == 'f'){
+        ruch->mode = 1;
         put_flag(plansza,x,y);
     }
     else if(place_mode == 'r'){
+        ruch->mode = 0;
         round_result->rezultat = check_field(plansza, x, y);
     }
+    ruch->x = x;
+    ruch->y = y;
     return round_result;
 }
 
@@ -90,6 +95,49 @@ custom_map* get_custom_map_data() {
     dane->y = y;
     dane->ile_bomb = ile_bomb;
     return dane;
+} 
+
+void save_minefield(minefield* plansza,char* player_name, move* moves,int move_count){
+    srand(time(NULL));
+    char random[8];
+    sprintf(random,"%d",rand() % (1000-0) + 0); //range 0 - 1000
+    char filebase[] = "zapis_";
+
+    char* filename = malloc(strlen(filebase) + strlen(player_name) + strlen(random) + 1 );
+    strcpy(filename,filebase);
+    strcat(filename,player_name);
+    strcat(filename,random);
+    printf("Nazwa pliku: %s\n",filename);
+
+    FILE* file = fopen(filename,"w+");
+    for (int x = 0; x < plansza->x; x++)
+    {
+        for (int y = 0; y < plansza->y; y++)
+        {
+            if(plansza->fields[x][y]->bomb == 1){
+                 fprintf(file,"%c",'B');
+            }
+            else {
+                 fprintf(file,"%c",'0');
+            }
+        }
+         fprintf(file,"\n");
+    }
+    fprintf(file,"TABLE_END\n");
+    fprintf(file, "\n");
+    for (int i = 0; i < move_count; i++)
+    {
+        fprintf(file,"%d %d %d \n",moves[i].x, moves[i].y,moves[i].mode);
+
+    }
+    
+    
+   
+
+
+
+    fclose(file);
+
 }
 
 

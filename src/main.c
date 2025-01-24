@@ -6,7 +6,7 @@
 #include "player.h"
 #include <string.h>
 #include <unistd.h>
-
+#include <ctype.h>
 
 #define CLRSCR() printf("\033[1;1H\033[2J");
 
@@ -76,23 +76,31 @@ if(mode == 1){
 
     int player_data_count = 0;
     player_data* player_datas;
-   
+    player_data current_player = (player_data) {.score = 0}; 
     
+    move* moves = malloc(sizeof(move) * 100); // max 100 moves
+    int current_move = 0;
+
     // first move
     display_minefield(plansza);
-    first_move(plansza);
+    current_move++;
+    first_move(plansza,&moves[current_move]);
+    minefield starting_minefield = *plansza; // save in memory if player wants to save to file
+
     
+
     while (1) // game loop
     {
         CLRSCR();
         display_minefield(plansza);
-        if(user_move(plansza)->rezultat == 2){
+        
+        if(user_move(plansza,&moves[current_move])->rezultat == 2){
                 
                 player_datas = read_players_data(&player_data_count);
                 if(player_datas == NULL){
                     player_datas = malloc(sizeof(player_data)); // allocate 1 struct for current player;
                 }
-                player_data current_player = (player_data) {.score = 0}; 
+            
                 current_player.name = malloc(256);
                 printf("=======================================\n\n Przegrałeś (odkryto bombe) :( \n\n");
                 strcpy(current_player.name,get_player_name());
@@ -111,9 +119,9 @@ if(mode == 1){
                     if(player_datas == NULL){
                         player_datas = malloc(sizeof(player_data)); // allocate 1 struct for current player;
                     }
-                    player_data current_player = (player_data) {.score = 0}; 
+        
                     current_player.name = malloc(256);
-                    printf("=======================================\n\n Wygrałeś użytkowniku \n\n");
+                    printf("=======================================\n\n Wygrałeś użytkowniku! \n\n");
                     strcpy(current_player.name,get_player_name());
                     current_player.score =  get_score(plansza,difficulty);
                     update_player_data(current_player.name,current_player.score,player_datas,&player_data_count);
@@ -125,8 +133,21 @@ if(mode == 1){
                 display_current_score(plansza,difficulty);
         }
 
-
+           current_move++;
         
     }
-    \
+    char response[20];
+    printf("\nCzy chcesz zapisać tą rozgrywkę? TAK / NIE\n");
+    scanf("%s", response);
+    
+    for (int i = 0; i < strlen(response); i++)
+    {
+        response[i] = tolower(response[i]);  // convert response to lower case
+    }
+    
+    if(strcmp(response,"tak") == 0){
+        printf("Zapisuje...\n");
+        save_minefield(&starting_minefield,current_player.name,moves,current_move);
+    }
+
 }

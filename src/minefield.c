@@ -145,8 +145,8 @@ void put_flag(minefield* plansza, int x ,int y){
     if(plansza->fields[x][y]->bomb || !plansza->fields[x][y]->hidden) return;
     plansza->fields[x][y]->flag = 1; 
 }
-void first_move(minefield* plansza) {
-    round_result* wynik = user_move(plansza);
+void first_move(minefield* plansza,move* ruch) {
+    round_result* wynik = user_move(plansza,ruch);
     if (wynik->rezultat == 2) {
         while (check_field(plansza,wynik->ruch_x, wynik->ruch_y) == 2) {
             int x = plansza->x;
