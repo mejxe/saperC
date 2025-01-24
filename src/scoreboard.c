@@ -9,7 +9,7 @@ int get_score(minefield* plansza,int difficulty){
     {
         for (int y = 0; y < plansza->y; y++)
         {
-            if(!plansza->fields[x][y]->hidden){
+            if(!plansza->fields[x][y]->hidden && !plansza->fields[x][y]->flag){
                 score++;
             }
         }
@@ -21,7 +21,6 @@ int get_score(minefield* plansza,int difficulty){
 
 void display_current_score(minefield* plansza,int difficulty){
    
-
     printf("\nWynik: %d  Poziom trudności: %d\n",get_score(plansza,difficulty),difficulty );
     
     
