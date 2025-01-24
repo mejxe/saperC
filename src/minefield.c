@@ -81,7 +81,6 @@ void display_minefield(minefield* plansza) {
             else if ( plansza->fields[i][j]->hidden ) {
                 printf ("  ■");
             }
-            else if ( plansza->fields[i][j]->bomb ) printf("  B");
             else {
                 printf("\x1b[2;30;46m %d \x1b[0m", plansza->fields[i][j]->bombs_near);
             }
@@ -144,7 +143,7 @@ int check_field(minefield* plansza, int x, int y) {
 
 void put_flag(minefield* plansza, int x ,int y){
     if ( x > plansza->x || y > plansza->y ) return; // out ouf bounds
-    if(plansza->fields[x][y]->bomb || !plansza->fields[x][y]->hidden) return;
+    if( !plansza->fields[x][y]->hidden) return;
     plansza->fields[x][y]->flag = 1; 
 }
 void first_move(minefield* plansza,move* ruch) {

@@ -149,14 +149,18 @@ int* display_move_from_file(minefield* plansza, FILE* plik) {
         exit(1);
     }
     char line[1024]; // for clearing 
-    fgets(line, 1024, plik); // clear
+    //fgets(line, 1024, plik); // clear
     fgets(line, 1024, plik); // clear
     int x, y, f;
     int good_moves = 0;
     while(fscanf(plik, "%d %d %d", &x,&y,&f) == 3) {
         good_moves++;
         printf("Wykonuje ruch: (%d, %d)\n", x,y);
+	if(f){
+		put_flag(plansza,x,y);
+	}else{
         check_field(plansza, x, y);
+	}
         display_minefield(plansza);
     }
     int difficulty;
