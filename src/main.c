@@ -93,7 +93,7 @@ if(mode == 1){
     {
         CLRSCR();
         display_minefield(plansza);
-        
+        display_current_score(plansza,difficulty);
         if(user_move(plansza,&moves[current_move])->rezultat == 2){
                 
                 player_datas = read_players_data(&player_data_count);
@@ -130,7 +130,6 @@ if(mode == 1){
                     free(plansza);
                     break;
                 }
-                display_current_score(plansza,difficulty);
         }
 
            current_move++;
