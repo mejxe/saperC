@@ -40,6 +40,10 @@ if(mode == 1){
     }
     else{
         printf("Pomyślnie otworzono plik %s \n",filename);
+        minefield* plansza = read_minefield_from_file(file);
+        int* gm_diff = display_move_from_file(plansza, file);
+        print_summary(plansza, gm_diff[0], gm_diff[1]);
+        exit(0);
     }
 
 }
@@ -146,7 +150,7 @@ if(mode == 1){
     
     if(strcmp(response,"tak") == 0){
         printf("Zapisuje...\n");
-        save_minefield(&starting_minefield,current_player.name,moves,current_move);
+        save_minefield(&starting_minefield,current_player.name,moves,current_move, difficulty);
     }
 
 }

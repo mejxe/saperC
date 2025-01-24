@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "minefield.h"
+#include "scoreboard.h"
 
 #define MAX_BUFF 32
 
@@ -97,7 +98,7 @@ custom_map* get_custom_map_data() {
     return dane;
 } 
 
-void save_minefield(minefield* plansza,char* player_name, move* moves,int move_count){
+void save_minefield(minefield* plansza,char* player_name, move* moves,int move_count, int difficulty){
     srand(time(NULL));
     char random[8];
     sprintf(random,"%d",rand() % (1000-0) + 0); //range 0 - 1000
@@ -110,6 +111,7 @@ void save_minefield(minefield* plansza,char* player_name, move* moves,int move_c
     printf("Nazwa pliku: %s\n",filename);
 
     FILE* file = fopen(filename,"w+");
+    fprintf(file, "%d %d\n", plansza->x, plansza->y);
     for (int x = 0; x < plansza->x; x++)
     {
         for (int y = 0; y < plansza->y; y++)
@@ -130,6 +132,7 @@ void save_minefield(minefield* plansza,char* player_name, move* moves,int move_c
         fprintf(file,"%d %d %d \n",moves[i].x, moves[i].y,moves[i].mode);
 
     }
+    fprintf(file, "difficulty %d", difficulty);
     
     
    
@@ -140,5 +143,34 @@ void save_minefield(minefield* plansza,char* player_name, move* moves,int move_c
 
 }
 
-
+int* display_move_from_file(minefield* plansza, FILE* plik) {
+    if (plik == NULL) {
+        printf("BŁĄD ODCZYTU\n");
+        exit(1);
+    }
+    char line[1024]; // for clearing 
+    fgets(line, 1024, plik); // clear
+    fgets(line, 1024, plik); // clear
+    int x, y, f;
+    int good_moves = 0;
+    while(fscanf(plik, "%d %d %d", &x,&y,&f) == 3) {
+        good_moves++;
+        printf("Wykonuje ruch: (%d, %d)\n", x,y);
+        check_field(plansza, x, y);
+        display_minefield(plansza);
+    }
+    int difficulty;
+    fscanf(plik, "difficulty %d",&difficulty);
+    int* gm_diff = malloc(sizeof(int)*2); 
+    gm_diff[0] = good_moves;
+    gm_diff[1] = difficulty;
+    return gm_diff;
+}
         
+void print_summary(minefield *plansza, int good_moves, int difficulty) {
+    int score = get_score(plansza, difficulty);
+    int rezultat = 0;
+    if(score/(difficulty%3) == plansza->x * plansza->y - plansza->ile_bomb) rezultat = 1;
+    printf("PODSUMOWANIE\nDobre ruchy: %d\nWynik: %d\nRezultat: %d\n", good_moves, score, rezultat);
+
+}

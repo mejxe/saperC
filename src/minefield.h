@@ -1,5 +1,6 @@
 #ifndef MINEFIELD_H
 #define MINEFIELD_H
+#include <stdio.h>
 
 
 
@@ -30,4 +31,5 @@ void reveal_field(minefield* plansza, int x, int y);
 int check_field(minefield* plansza, int x, int y);
 void put_flag(minefield* plansza, int x ,int y);
 void first_move(minefield* plansza,move* ruch); 
+minefield* read_minefield_from_file(FILE* plik);
 #endif

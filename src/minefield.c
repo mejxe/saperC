@@ -2,8 +2,10 @@
 #include "io.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
+#define BUFSIZE 1024
 #define COLOR_1 "\x1b[2;30;46m"
 #define COLOR_CLEAR "\x1b[0m"
 /*
@@ -15,7 +17,7 @@ minefield* create_minefield(int x, int y, int ile_bomb) {
     // inicjalizacja pustej planszy
     plansza->x = x;
     plansza->y = y;
-    plansza->fields = malloc(x * sizeof(field *));
+    plansza->fields = malloc(x * sizeof(field));
     plansza->ile_bomb = ile_bomb;
     for (int i = 0; i < x; i++) {
         plansza->fields[i] = malloc(y * sizeof(field));
@@ -76,10 +78,10 @@ void display_minefield(minefield* plansza) {
             if ( plansza->fields[i][j]->flag ) {
                 printf ("%s 🚩%s",COLOR_1,COLOR_CLEAR);
             }
-            else if ( plansza->fields[i][j]->bomb ) printf("  B");
             else if ( plansza->fields[i][j]->hidden ) {
                 printf ("  ■");
             }
+            else if ( plansza->fields[i][j]->bomb ) printf("  B");
             else {
                 printf("\x1b[2;30;46m %d \x1b[0m", plansza->fields[i][j]->bombs_near);
             }
@@ -157,6 +159,50 @@ void first_move(minefield* plansza,move* ruch) {
         }
     }
 }
+minefield* read_minefield_from_file(FILE* plik) {
+    if (plik == NULL) {
+        printf("BŁĄD ODCZYTU");
+        exit(1);
+    }
+    int x, y;
+    char line[BUFSIZE];
+    minefield* plansza = malloc(sizeof(*plansza));
+    fscanf(plik, "%d %d", &x, &y);
+    while(fgetc(plik) == '\n');
+
+    // inicjalizacja pamięci
+    plansza->fields = malloc(x*sizeof(field));
+    for (int i = 0; i < x; i++) {
+        plansza->fields[i] = malloc(y * sizeof(field));
+    } 
+    plansza->x = x;
+    plansza->y = y;
+
+
+    for (int i = 0; i < x; i++) {
+        fgets(line, BUFSIZE, plik);
+        if (strcmp(line, "TABLE_END") == 0) break;
+        for (int j = 0; j < y; j++) {
+            field* new_field = malloc(sizeof(*new_field));
+            new_field->flag = 0;
+            new_field->hidden = 1;
+            new_field->bombs_near = 0;
+            if (line[j] == '0') {
+                new_field->bomb = 0;
+            } else {
+                new_field->bomb = 1;
+            }
+            plansza->fields[i][j] = new_field;
+        }
+    }
+    check_proximity(plansza);
+    fgets(line, BUFSIZE, plik);
+    return plansza;
+}
+
+            
+
+
 
 
 
