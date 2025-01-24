@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+
 #define MAX_BUFF 32
 
 void clear_buff() {
@@ -30,7 +31,7 @@ round_result* user_move(minefield* plansza) {
         fgets(input, sizeof(input), stdin); // Odczyt danych wejściowych
 
         // Parsowanie danych wejściowych
-        if ((sscanf(input, "%c %d %d", &place_mode, &x, &y) == 3) && x>=0 && x<plansza->x && y>=0 && y<plansza->y && (place_mode == 'f' || place_mode == 'r') ) {
+        if ((sscanf(input, "%c %d %d", &place_mode, &y, &x) == 3) && x>=0 && x<plansza->x && y>=0 && y<plansza->y && (place_mode == 'f' || place_mode == 'r') ) {
             break;
         }
         printf("Błąd: Niepoprawny format danych wejściowych. Spróbuj ponownie.\n");
@@ -90,5 +91,6 @@ custom_map* get_custom_map_data() {
     dane->ile_bomb = ile_bomb;
     return dane;
 }
+
 
         

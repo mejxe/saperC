@@ -5,10 +5,45 @@
 #include "scoreboard.h"
 #include "player.h"
 #include <string.h>
+#include <unistd.h>
 
-#define CLRSCR() printf("\e[1;1H\e[2J");
 
-int main() {
+#define CLRSCR() printf("\033[1;1H\033[2J");
+
+int main(int argc, char** argv) {
+
+    int c;
+    char filename[64];
+    int mode = 0;
+    while((c = getopt(argc,argv,"f:")) != -1){
+        
+        switch (c){
+        case 'f':
+            strcpy(filename,optarg);
+            mode = 1;
+            break;
+        case '?':
+            printf("Nieznany argument: %s\n",optarg);
+            break;
+        default:
+            break;
+        }
+
+        
+    }
+
+if(mode == 1){
+    FILE* file = fopen(filename,"r");
+    if(file == NULL) {
+        printf("Nie udało się otworzyć pliku %s \n",filename);
+        mode = 0;
+    }
+    else{
+        printf("Pomyślnie otworzono plik %s \n",filename);
+    }
+
+}
+
     minefield* plansza;
     int difficulty = get_difficulty();
     switch (difficulty) {
